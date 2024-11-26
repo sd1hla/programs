@@ -1,0 +1,51 @@
+package main
+
+import (
+ "bufio"
+ "fmt"
+ "os"
+ "strings"
+)
+
+func zamena(word string, replace [][2]string) string {
+ replaceDict := make(map[string]string)
+ for _, pair := range replace {
+  replaceDict[pair[0]] = pair[1]
+ }
+
+ var reverse strings.Builder
+ for _, char := range word {
+  if replacement, exists := replaceDict[string(char)]; exists {
+   reverse.WriteString(replacement)
+  } else {
+   reverse.WriteRune(char)
+  }
+ }
+
+ return reverse.String()
+}
+
+func main() {
+ reader := bufio.NewReader(os.Stdin)
+ fmt.Print("Введите слово: ")
+ word, _ := reader.ReadString('\n')
+ word = strings.TrimSpace(word)
+
+ // Список замен
+ replacements := [][2]string{
+  {"a", "z"}, {"b", "y"}, {"c", "x"}, {"d", "w"}, {"e", "v"}, {"f", "u"},
+  {"g", "t"}, {"h", "s"}, {"i", "r"}, {"j", "q"}, {"k", "p"}, {"l", "o"},
+  {"m", "n"}, {"n", "m"}, {"o", "l"}, {"p", "k"}, {"q", "j"}, {"r", "i"},
+  {"s", "h"}, {"t", "g"}, {"u", "f"}, {"v", "e"}, {"w", "d"}, {"x", "c"},
+  {"y", "b"}, {"z", "a"},
+  {"A", "Z"}, {"B", "Y"}, {"C", "X"}, {"D", "W"}, {"E", "V"}, {"F", "U"},
+  {"G", "T"}, {"H", "S"}, {"I", "R"}, {"J", "Q"}, {"K", "P"}, {"L", "O"},
+  {"M", "N"}, {"N", "M"}, {"O", "L"}, {"P", "K"}, {"Q", "J"}, {"R", "I"},
+  {"S", "H"}, {"T", "G"}, {"U", "F"}, {"V", "E"}, {"W", "D"}, {"X", "C"},
+  {"Y", "B"}, {"Z", "A"},
+ }
+
+ result := zamena(word, replacements)
+
+ fmt.Println("Результат:", result)
+}
