@@ -1,0 +1,42 @@
+package main
+
+import (
+ "fmt"
+ "math/rand"
+ "time"
+)
+
+func main() {
+ k := 0
+
+ mas := make([]int, 100)
+ for i := 0; i < 100; i++ {
+  mas[i] = i + 1
+ }
+
+ for _, num := range mas {
+  fmt.Print(num, " ")
+ }
+ fmt.Println()
+
+ rand.Seed(time.Now().UnixNano())
+ number := rand.Intn(100) + 1
+ fmt.Println("Заданное число:", number)
+
+ left := 0
+ right := 99
+ var middle int
+
+ for left <= right {
+  middle = (left + right) / 2
+  if mas[middle] == number {
+   fmt.Println("Найденное число:", number)
+   fmt.Println("Количество шагов:", k)
+   break
+  } else if mas[middle] < number {
+   left = middle + 1
+  } else {
+   right = middle - 1
+  }
+  k++
+ }
